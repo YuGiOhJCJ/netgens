@@ -1,3 +1,21 @@
+/*
+   Copyright 2013 YuGiOhJCJ
+
+   This file is part of Netgens.
+
+   Netgens is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   Netgens is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with Netgens.  If not, see <http://www.gnu.org/licenses/>.
+*/
 #include <SDL.h>
 #include "port.h"
 #include <stdio.h>
@@ -35,6 +53,7 @@
 #include "support.h"
 #include "lc89510.h"
 #include "ui_proxy.h"
+#include "network.h" /* for Network_Save_Config and Network_Load_Config */
 enum
 {
   DIK_UP = SDLK_UP, DIK_DOWN = SDLK_DOWN,
@@ -2210,6 +2229,7 @@ Save_Config (char *File_Name)
   WritePrivateProfileString ("Input", "P2D.Y", Str_Tmp, Conf_File);
   sprintf (Str_Tmp, "%d", Keys_Def[7].Z);
   WritePrivateProfileString ("Input", "P2D.Z", Str_Tmp, Conf_File);
+  Network_Save_Config(Conf_File);
 
   return 1;
 }
@@ -2613,6 +2633,7 @@ Load_Config (char *File_Name, void *Game_Active)
   Keys_Def[7].X = GetPrivateProfileInt ("Input", "P2D.X", 0, Conf_File);
   Keys_Def[7].Y = GetPrivateProfileInt ("Input", "P2D.Y", 0, Conf_File);
   Keys_Def[7].Z = GetPrivateProfileInt ("Input", "P2D.Z", 0, Conf_File);
+  Network_Load_Config(Conf_File);
 
   Make_IO_Table ();
   return 1;

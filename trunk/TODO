@@ -1,0 +1,16 @@
+improve the error messages
+handle the disconnections
+allow to play 32x and megacd
+add the sdl_net check in the configure script
+add the nasm check in the configure script
+add a chat window
+add a spectator mode
+add the choice of the player (1 or 2)
+add the possibility to save the network game
+download the rom automatically
+add the option to set the audio volume
+allow to set the shortcuts
+add mnemonics to the menu bar
+free the allocated memory
+close the windows when "OK" is selected
+add -lGL to src/gens/Makefile.am for Ubuntu
