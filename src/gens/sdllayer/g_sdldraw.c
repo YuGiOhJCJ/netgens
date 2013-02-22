@@ -1,3 +1,21 @@
+/*
+   Copyright 2013 YuGiOhJCJ
+
+   This file is part of Netgens.
+
+   Netgens is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   Netgens is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with Netgens.  If not, see <http://www.gnu.org/licenses/>.
+*/
 #include <SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,6 +48,7 @@ SDL_Surface *screen = NULL;
 
 #include "support.h"
 #include <gdk/gdkx.h>
+#include "network.h" /* for Network_Do */
 
 
 clock_t Last_Time = 0, New_Time = 0;
@@ -692,6 +711,7 @@ int Update_Crazy_Effect(void)
 
 int Update_Emulation(void)
 {
+	Network_Do();
 	static int Over_Time = 0;
 	int current_div;
 

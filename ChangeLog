@@ -1,0 +1,31 @@
+2013-02-22  YuGiOhJCJ  <yugiohjcj@1s.fr>
+
+	* src/gens/network/network.h: Added file (declarations for the network feature).
+
+	* src/gens/network/network.c: Added file (definitions for the network feature).
+
+	* ChangeLog: Added file (list of changes).
+
+	* TODO: Added file (list of tasks to do).
+
+	* AUTHORS: Modified file (YuGiOhJCJ is added as author for the network feature).
+
+	* src/gens/sdllayer/g_sdldraw.c(Update_Emulation): Modified function (calls the Network_Do function).
+
+	* src/gens/util/file/save.c(Save_Config): Modified function (calls the Network_Save_Config function).
+
+	* src/gens/util/file/save.c(Load_Config): Modified function (calls the Network_Load_Config function).
+
+	* src/gens/gtkui/glade/interface.c(create_gens_window): Modified function (calls the Network_Create_Window).
+
+	* src/gens/sdllayer/g_sdldraw.c: Modified file (the copyright notice is added).
+
+	* src/gens/util/file/save.c: Modified file (the copyright notice is added).
+
+	* src/gens/gtkui/glade/interface.c: Modified file (the copyright notice is added).
+
+	* src/gens/Makefile.am: Modified file (the "INCLUDES" variable is modified to take in account the "network" directory).
+
+	* src/gens/Makefile.am: Modified file (the "gens_SOURCES" variable is modified to take in account the "network" directory).
+
+	* src/gens/Makefile.am: Modified file (the "gens_LDADD" variable is modified to take in account the "SDL_net" library).

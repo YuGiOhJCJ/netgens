@@ -35,7 +35,7 @@ INCLUDES = \
 -I@srcdir@/gens_core/sound -I@srcdir@/gens_core/mem -I@srcdir@/gens_core/misc -I@srcdir@/gens_core/gfx \
 -I@srcdir@/gens_core/io -I@srcdir@/gens_core/vdp -I@srcdir@/segacd -I@srcdir@/mp3_dec -I@srcdir@/sdllayer \
 -I@srcdir@/util -I@srcdir@/util/gfx -I@srcdir@/util/sound -I@srcdir@/util/file \
--I@srcdir@/port -I@srcdir@/emulator -I@srcdir@/debug -I@srcdir@/netplay \
+-I@srcdir@/port -I@srcdir@/emulator -I@srcdir@/debug -I@srcdir@/netplay -I@srcdir@/network \
 -I@srcdir@/gtkui -I@srcdir@/gtkui/glade \
 -I@srcdir@
 
@@ -157,7 +157,9 @@ gens_SOURCES = \
 		gtkui/support.c \
 		gtkui/support.h \
 		emulator/parse.c \
-		emulator/parse.h
+		emulator/parse.h \
+		network/network.c \
+		network/network.h
 ##		netplay/ccnet.c \
 ##		netplay/ccnet.h
 		
@@ -172,7 +174,7 @@ gens_LDADD = \
 		$(ASMFILES) \
 		../starscream/main68k/main68k.o \
 		../starscream/sub68k/sub68k.o \
-		-lm -lz @SDL_LIBS@ @GTK_LIBS@
+		-lm -lz @SDL_LIBS@ @GTK_LIBS@ -lSDL_net
 
 ## ARGH!! Get me some C4 and the address of the programmer who made me 
 ## have to do this!!
