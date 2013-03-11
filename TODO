@@ -1,8 +1,6 @@
 improve the error messages
 handle the disconnections
 allow to play 32x and megacd
-add the sdl_net check in the configure script
-add the nasm check in the configure script
 add a chat window
 add a spectator mode
 add the choice of the player (1 or 2)
@@ -13,4 +11,5 @@ allow to set the shortcuts
 add mnemonics to the menu bar
 free the allocated memory
 close the windows when "OK" is selected
-add -lGL to src/gens/Makefile.am for Ubuntu
+remove the warning "warning: label alone on a line without a colon might be in error"
+remove the warning "warning: ‘gdk_pixbuf_unref’ is deprecated"
