@@ -1,7 +1,20 @@
-## Process this file with automake to create Makefile.in
-
+# Copyright 2013 YuGiOhJCJ
+#
+# This file is part of Netgens.
+#
+# Netgens is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Netgens is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Netgens.  If not, see <http://www.gnu.org/licenses/>.
 AUTOMAKE_OPTIONS = subdir-objects
-
 ASMFILES = \
 		gens_core/gfx/blit.o \
 		gens_core/gfx/hq2x16.o \
@@ -18,18 +31,14 @@ ASMFILES = \
 		gens_core/vdp/vdp_io.o \
 		gens_core/vdp/vdp_rend.o \
 		gens_core/cpu/z80/z80.o
-
-
 NASM = \
 nasm -O1 -D __GCC2 -f elf \
 -I@srcdir@/gens_core/ -I@srcdir@/gens_core/io/ -I@srcdir@/gens_core/misc/ \
 -I@srcdir@/gens_core/vdp/ -I@srcdir@/gens_core/sound/ -I@srcdir@/gens_core/gfx/ \
 -I@srcdir@/gens_core/cpu/sh2/ -I@srcdir@/gens_core/cpu/z80/ -I@srcdir@/gens_core/mem/
-
 %.o: %.asm
 	mkdir -p gens_core/gfx gens_core/io gens_core/mem gens_core/misc gens_core/sound gens_core/cpu/sh2 gens_core/vdp gens_core/cpu/z80 ;
 	$(NASM) $< -o $@
-
 INCLUDES = \
 -I@srcdir@/gens_core/cpu/68k -I@srcdir@/gens_core/cpu/sh2 -I@srcdir@/gens_core/cpu/z80 \
 -I@srcdir@/gens_core/sound -I@srcdir@/gens_core/mem -I@srcdir@/gens_core/misc -I@srcdir@/gens_core/gfx \
@@ -38,7 +47,6 @@ INCLUDES = \
 -I@srcdir@/port -I@srcdir@/emulator -I@srcdir@/debug -I@srcdir@/netplay -I@srcdir@/network \
 -I@srcdir@/gtkui -I@srcdir@/gtkui/glade \
 -I@srcdir@
-
 bin_PROGRAMS = gens
 gens_SOURCES = \
 		gens_core/nasmhead.inc \
@@ -160,31 +168,21 @@ gens_SOURCES = \
 		emulator/parse.h \
 		network/network.c \
 		network/network.h
-##		netplay/ccnet.c \
-##		netplay/ccnet.h
-		
 gens_CFLAGS = \
 			  -DDATADIR=\"@datadir@/@PACKAGE@\" \
 			  @SDL_CFLAGS@ \
 			  @GTK_CFLAGS@ \
+			  @GL_CFLAGS@ \
 			  @CFLAGS@
-
-
 gens_LDADD = \
 		$(ASMFILES) \
 		../starscream/main68k/main68k.o \
 		../starscream/sub68k/sub68k.o \
-		-lm -lz @SDL_LIBS@ @GTK_LIBS@ -lSDL_net
-
-## ARGH!! Get me some C4 and the address of the programmer who made me 
-## have to do this!!
-
-
+		-lm -lz @SDL_LIBS@ @GTK_LIBS@ @GL_LIBS@ @SDLNET_LIBS@
 gens_DEPENDENCIES = \
 		$(ASMFILES) \
 		../starscream/main68k/main68k.o \
 		../starscream/sub68k/sub68k.o
-
 CLEANFILES = \
 		$(ASMFILES) \
 		../starscream/main68k/main68k.o \

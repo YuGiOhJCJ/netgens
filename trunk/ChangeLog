@@ -1,3 +1,63 @@
+2013-03-11  YuGiOhJCJ  <yugiohjcj@1s.fr>
+
+	* configure.in: Removed file (it is in fact renamed to "configure.ac" that is now preferred).
+	
+	* aclocal.m4: Removed file (because it can be generated).
+
+	* autom4te.cache: Removed file (because it can be generated).
+
+	* compile: Removed file (because it can be generated).
+
+	* config.guess: Removed file (because it can be generated).
+
+	* config.h.in: Removed file (because it can be generated).
+
+	* config.sub: Removed file (because it can be generated).
+
+	* configure: Removed file (because it can be generated).
+
+	* depcomp: Removed file (because it can be generated).
+
+	* install-sh: Removed file (because it can be generated).
+
+	* Makefile.in: Removed file (because it can be generated).
+
+	* missing: Removed file (because it can be generated).
+
+	* mkinstalldirs: Removed file (because it can be generated).
+
+	* pixmaps/Makefile.in: Removed file (because it can be generated).
+
+	* src/gens/Makefile.in: Removed file (because it can be generated).
+	
+	* src/Makefile.in: Removed file (because it can be generated).
+
+	* src/starscream/main68k/Makefile.in: Removed file (because it can be generated).
+
+	* src/starscream/Makefile.in: Removed file (because it can be generated).
+
+	* src/starscream/sub68k/Makefile.in: Removed file (because it can be generated).
+
+	* stamp-h.in: Removed file (because it can be generated).
+
+	* configure.ac: New file (it is in fact the renamed "configure.in" file).
+
+	* configure.in: Modified file (check for the SDL_net library).
+
+	* configure.in: Modified file (check for the nasm program).
+
+	* configure.in: Modified file (the copyright notice is added).
+
+	* Makefile.am: Modified file (the copyright notice is added).
+
+	* Makefile.am: Modified file (add the maintainer-clean-local rule to clean files that can be generated).
+
+	* src/gens/Makefile.am: Modified file (the copyright notice is added).
+
+	* src/gens/Makefile.am: Modified file (add the GL_CFLAGS, GL_LIBS and SDLNET_LIBS variables).
+
+	* src/gens/Makefile.am: Modified file (the -lGL option is added to compile fine on Ubuntu).
+	
 2013-02-22  YuGiOhJCJ  <yugiohjcj@1s.fr>
 
 	* src/gens/network/network.h: Added file (declarations for the network feature).
