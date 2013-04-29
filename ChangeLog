@@ -1,3 +1,39 @@
+2013-04-29  YuGiOhJCJ  <yugiohjcj@1s.fr>
+
+	* configure.ac: Modified file (the error messages are displayed as soon as possible).
+
+	* src/gens/gtkui/glade/interface.c: Modified file (use "g_object_unref" instead of "gdk_pixbuf_unref" to avoid the warnings).
+
+	* src/gens/network/network.c(Network_Create_Window): Modified file (use GTK_CONTAINER to avoid the warnings).
+
+	* src/gens/network/network.c(Network_Create_Window): Modified file (use GTK_BIN to avoid the warnings).
+
+	* src/gens/network/network.c(Network_Create_Window_Network_Port): Modified file (use GTK_ENTRY to avoid the warnings).
+
+	* src/gens/network/network.c(Network_Create_Window_Network_Port): Modified file (cast the argument 4 of g_signal_connect to gpointer to avoid the warnings).
+
+	* src/gens/network/network.c(Network_Create_Window_Network_Address): Modified file (use GTK_ENTRY to avoid the warnings).
+
+	* src/gens/network/network.c(Network_Create_Window_Network_Address): Modified file (cast the argument 4 of g_signal_connect to gpointer to avoid the warnings).
+
+	* src/gens/network/network.c(Network_Do): Modified file (the function is renamed Network_Update_Emulation because it is called by the Update_Emulation function).
+
+	* src/gens/network/network.h(Network_Do): Modified file (the function is renamed Network_Update_Emulation because it is called by the Update_Emulation function).
+
+	* src/gens/network/network.c(Network_Do): Modified file (the function assigns Update_Frame to Network_Update_Frame because we must remind if we are doing a Genesis, SegaCD or 32X frame).
+
+	* src/gens/network/network.c(Network_Do): Modified file (the function assigns Network_Do_Frame instead of Network_Do_Genesis_Frame to Update_Frame in order to work with Genesis, SegaCD and 32X instead of Genesis only).
+
+	* src/gens/network/network.c(Network_Do_Genesis_Frame): Modified file (the function is renamed Network_Do_Frame because it can do a Genesis, SegaCD or 32X frame).
+
+	* src/gens/network/network.h(Network_Do_Genesis_Frame): Modified file (the function is renamed Network_Do_Frame because it can do a Genesis, SegaCD or 32X frame).
+
+	* src/gens/network/network.h: Modified file (the file declares the Network_Update_Frame pointer).
+
+	* src/gens/network/network.c(Network_Do_Genesis_Frame): Modified file (the function calls Network_Update_Frame instead of Do_Genesis_Frame because it can do a Genesis, SegaCD or 32X frame).
+
+	* src/gens/sdllayer/g_sdldraw.c(Update_Emulation): Modified file (the function calls Network_Update_Emulation instead of Network_Do because Network_Do doesn't exists).
+
 2013-03-11  YuGiOhJCJ  <yugiohjcj@1s.fr>
 
 	* configure.in: Removed file (it is in fact renamed to "configure.ac" that is now preferred).

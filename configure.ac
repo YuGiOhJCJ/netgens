@@ -22,10 +22,10 @@ AC_CHECK_LIB([SDL_net], [SDLNet_Init], [], [AC_MSG_ERROR([cannot find the SDL_ne
 AC_CHECK_LIB([gtk-x11-2.0], [gtk_init], [], [AC_MSG_ERROR([cannot find the gtk-x11-2.0 library, go to http://www.gtk.org/])])
 AC_CHECK_LIB([GL], [glEnable], [], [AC_MSG_ERROR([cannot find the GL library, go to http://mesa3d.sourceforge.net/])])
 AC_CHECK_PROG([HAVE_PKG_CONFIG],[pkg-config],[yes])
-AC_CHECK_PROG([HAVE_NASM],[nasm],[yes])
 if test "x$HAVE_PKG_CONFIG" != xyes; then
 	AC_MSG_ERROR([cannot find the pkg-config program, go to http://www.freedesktop.org/])
 fi
+AC_CHECK_PROG([HAVE_NASM],[nasm],[yes])
 if test "x$HAVE_NASM" != xyes; then
 	AC_MSG_ERROR([cannot find the nasm program, go to http://www.nasm.us/])
 fi
