@@ -48,7 +48,7 @@ SDL_Surface *screen = NULL;
 
 #include "support.h"
 #include <gdk/gdkx.h>
-#include "network.h" /* for Network_Do */
+#include "network.h" /* for Network_Update_Emulation */
 
 
 clock_t Last_Time = 0, New_Time = 0;
@@ -711,7 +711,7 @@ int Update_Crazy_Effect(void)
 
 int Update_Emulation(void)
 {
-	Network_Do();
+	Network_Update_Emulation();
 	static int Over_Time = 0;
 	int current_div;
 

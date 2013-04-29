@@ -278,7 +278,7 @@ create_gens_window (void)
   if (gens_window_icon_pixbuf)
     {
       gtk_window_set_icon (GTK_WINDOW (gens_window), gens_window_icon_pixbuf);
-      gdk_pixbuf_unref (gens_window_icon_pixbuf);
+      g_object_unref (gens_window_icon_pixbuf);
     }
 
   vbox1 = gtk_vbox_new (FALSE, 0);
@@ -2088,7 +2088,7 @@ create_about (void)
   if (about_icon_pixbuf)
     {
       gtk_window_set_icon (GTK_WINDOW (about), about_icon_pixbuf);
-      gdk_pixbuf_unref (about_icon_pixbuf);
+      g_object_unref (about_icon_pixbuf);
     }
   gtk_window_set_type_hint (GTK_WINDOW (about), GDK_WINDOW_TYPE_HINT_DIALOG);
   gtk_dialog_set_has_separator (GTK_DIALOG (about), FALSE);
@@ -2202,7 +2202,7 @@ create_game_genie (void)
   if (game_genie_icon_pixbuf)
     {
       gtk_window_set_icon (GTK_WINDOW (game_genie), game_genie_icon_pixbuf);
-      gdk_pixbuf_unref (game_genie_icon_pixbuf);
+      g_object_unref (game_genie_icon_pixbuf);
     }
   gtk_window_set_type_hint (GTK_WINDOW (game_genie), GDK_WINDOW_TYPE_HINT_DIALOG);
 
@@ -2462,7 +2462,7 @@ create_color_adjust (void)
   if (color_adjust_icon_pixbuf)
     {
       gtk_window_set_icon (GTK_WINDOW (color_adjust), color_adjust_icon_pixbuf);
-      gdk_pixbuf_unref (color_adjust_icon_pixbuf);
+      g_object_unref (color_adjust_icon_pixbuf);
     }
 
   vbox16 = gtk_vbox_new (FALSE, 5);
@@ -2700,7 +2700,7 @@ create_general_option (void)
   if (general_option_icon_pixbuf)
     {
       gtk_window_set_icon (GTK_WINDOW (general_option), general_option_icon_pixbuf);
-      gdk_pixbuf_unref (general_option_icon_pixbuf);
+      g_object_unref (general_option_icon_pixbuf);
     }
 
   vbox9 = gtk_vbox_new (FALSE, 5);
@@ -3378,7 +3378,7 @@ create_controllers_settings (void)
   if (controllers_settings_icon_pixbuf)
     {
       gtk_window_set_icon (GTK_WINDOW (controllers_settings), controllers_settings_icon_pixbuf);
-      gdk_pixbuf_unref (controllers_settings_icon_pixbuf);
+      g_object_unref (controllers_settings_icon_pixbuf);
     }
 
   table6 = gtk_table_new (2, 2, FALSE);
@@ -4228,7 +4228,7 @@ create_directories_configuration (void)
   if (directories_configuration_icon_pixbuf)
     {
       gtk_window_set_icon (GTK_WINDOW (directories_configuration), directories_configuration_icon_pixbuf);
-      gdk_pixbuf_unref (directories_configuration_icon_pixbuf);
+      g_object_unref (directories_configuration_icon_pixbuf);
     }
 
   vbox13 = gtk_vbox_new (FALSE, 5);
@@ -4807,7 +4807,7 @@ create_bios_files (void)
   if (bios_files_icon_pixbuf)
     {
       gtk_window_set_icon (GTK_WINDOW (bios_files), bios_files_icon_pixbuf);
-      gdk_pixbuf_unref (bios_files_icon_pixbuf);
+      g_object_unref (bios_files_icon_pixbuf);
     }
 
   vbox14 = gtk_vbox_new (FALSE, 10);
@@ -5436,7 +5436,7 @@ create_msgbox (void)
   if (msgbox_icon_pixbuf)
     {
       gtk_window_set_icon (GTK_WINDOW (msgbox), msgbox_icon_pixbuf);
-      gdk_pixbuf_unref (msgbox_icon_pixbuf);
+      g_object_unref (msgbox_icon_pixbuf);
     }
   gtk_window_set_type_hint (GTK_WINDOW (msgbox), GDK_WINDOW_TYPE_HINT_DIALOG);
   gtk_dialog_set_has_separator (GTK_DIALOG (msgbox), FALSE);
@@ -5651,7 +5651,7 @@ create_sdl_test (void)
   if (sdl_test_icon_pixbuf)
     {
       gtk_window_set_icon (GTK_WINDOW (sdl_test), sdl_test_icon_pixbuf);
-      gdk_pixbuf_unref (sdl_test_icon_pixbuf);
+      g_object_unref (sdl_test_icon_pixbuf);
     }
 
   frame17 = gtk_frame_new (NULL);
@@ -5805,7 +5805,7 @@ create_cdrom_window (void)
   if (cdrom_window_icon_pixbuf)
     {
       gtk_window_set_icon (GTK_WINDOW (cdrom_window), cdrom_window_icon_pixbuf);
-      gdk_pixbuf_unref (cdrom_window_icon_pixbuf);
+      g_object_unref (cdrom_window_icon_pixbuf);
     }
 
   vbox18 = gtk_vbox_new (FALSE, 10);

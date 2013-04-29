@@ -148,7 +148,7 @@ void Network_Create_Window_Network_Address(void)
 	gtk_widget_set_name(Network_Entry_Network_Address, "Network_Entry_Network_Address");
 	gtk_widget_show(Network_Entry_Network_Address);
 	gtk_box_pack_start(GTK_BOX(Network_VBox_Network_Address), Network_Entry_Network_Address, TRUE, TRUE, 0);
-	gtk_entry_set_text(Network_Entry_Network_Address, Network_Address);
+	gtk_entry_set_text(GTK_ENTRY(Network_Entry_Network_Address), Network_Address);
 	/* hbox network address */
 	GtkWidget* Network_HBox_Network_Address;
 	Network_HBox_Network_Address = gtk_hbox_new(TRUE, Spacing);
@@ -171,7 +171,7 @@ void Network_Create_Window_Network_Address(void)
 	gtk_button_set_relief(GTK_BUTTON(Network_Button_Network_Address_Ok), GTK_RELIEF_NONE);
 	/* connect to the callback function */
 	g_signal_connect((gpointer) Network_Button_Network_Address_Cancel, "clicked", G_CALLBACK(gtk_widget_destroy), NULL);
-	g_signal_connect((gpointer) Network_Button_Network_Address_Ok, "clicked", G_CALLBACK(Network_Set_Value), gtk_entry_get_text(Network_Entry_Network_Address));
+	g_signal_connect((gpointer) Network_Button_Network_Address_Ok, "clicked", G_CALLBACK(Network_Set_Value), (gpointer) gtk_entry_get_text(GTK_ENTRY(Network_Entry_Network_Address)));
 	/* show */
 	gtk_widget_show(Network_Window_Network_Address);
 }
@@ -199,7 +199,7 @@ void Network_Create_Window_Network_Port(void)
 	gtk_widget_set_name(Network_Entry_Network_Port, "Network_Entry_Network_Port");
 	gtk_widget_show(Network_Entry_Network_Port);
 	gtk_box_pack_start(GTK_BOX(Network_VBox_Network_Port), Network_Entry_Network_Port, TRUE, TRUE, 0);
-	gtk_entry_set_text(Network_Entry_Network_Port, value);
+	gtk_entry_set_text(GTK_ENTRY(Network_Entry_Network_Port), value);
 	/* hbox network port */
 	GtkWidget* Network_HBox_Network_Port;
 	Network_HBox_Network_Port = gtk_hbox_new(TRUE, Spacing);
@@ -222,7 +222,7 @@ void Network_Create_Window_Network_Port(void)
 	gtk_button_set_relief(GTK_BUTTON(Network_Button_Network_Port_Ok), GTK_RELIEF_NONE);
 	/* connect to the callback function */
 	g_signal_connect((gpointer) Network_Button_Network_Port_Cancel, "clicked", G_CALLBACK(gtk_widget_destroy), NULL);
-	g_signal_connect((gpointer) Network_Button_Network_Port_Ok, "clicked", G_CALLBACK(Network_Set_Value), gtk_entry_get_text(Network_Entry_Network_Port));
+	g_signal_connect((gpointer) Network_Button_Network_Port_Ok, "clicked", G_CALLBACK(Network_Set_Value), (gpointer) gtk_entry_get_text(GTK_ENTRY(Network_Entry_Network_Port)));
 	/* show */
 	gtk_widget_show(Network_Window_Network_Port);
 }
@@ -230,14 +230,14 @@ void Network_Create_Window(GtkWidget* Network_Window)
 {
 	/* vbox */
 	GtkWidget* Network_VBox;
-	Network_VBox = gtk_bin_get_child(Network_Window);
+	Network_VBox = gtk_bin_get_child(GTK_BIN(Network_Window));
 	/* handlebox */
 	GtkWidget* Network_Handle_Box;
-	GList* Network_G_List = gtk_container_get_children(Network_VBox);
+	GList* Network_G_List = gtk_container_get_children(GTK_CONTAINER(Network_VBox));
 	Network_Handle_Box = Network_G_List->data;
 	/* menubar */
 	GtkWidget* Network_Menu_Bar;
-	Network_G_List = gtk_container_get_children(Network_Handle_Box);
+	Network_G_List = gtk_container_get_children(GTK_CONTAINER(Network_Handle_Box));
 	Network_Menu_Bar = Network_G_List->data;
 	/* item network */
 	GtkWidget* Network_Item_Network;
@@ -308,7 +308,7 @@ void Network_Create_Window(GtkWidget* Network_Window)
 	g_signal_connect((gpointer) Network_Item_Network_Address, "activate", G_CALLBACK(Network_Create_Window_Network_Address), NULL);
 	g_signal_connect((gpointer) Network_Item_Network_Port, "activate", G_CALLBACK(Network_Create_Window_Network_Port), NULL);
 }
-int Network_Do_Genesis_Frame(void)
+int Network_Do_Frame(void)
 {
 	if(strcmp(Network_Mode, "server") == 0)
 	{
@@ -338,11 +338,13 @@ int Network_Do_Genesis_Frame(void)
 		if(Result < Len)
 			fprintf(stderr, "%s:%d: %s (The client has a problem while sending data over the socket)\n", __FILE__, __LINE__, __PRETTY_FUNCTION__);
 	}
-	Do_Genesis_Frame();
+	Network_Update_Frame();
 	return 0;
 }
-void Network_Do(void)
+void Network_Update_Emulation(void)
 {
+	if(Update_Frame != Do_VDP_Only && Update_Frame != Network_Do_Frame)
+		Network_Update_Frame = Update_Frame;
 	if(strcmp(Network_Mode, "server") == 0)
 	{
 		if(Network_Server_Tcpsocket == NULL)
@@ -364,7 +366,7 @@ void Network_Do(void)
 		else
 		{
 			Frame_Skip = 0;
-			Update_Frame = Network_Do_Genesis_Frame;
+			Update_Frame = Network_Do_Frame;
 		}
 	}
 	else if(strcmp(Network_Mode, "client") == 0)
@@ -382,7 +384,7 @@ void Network_Do(void)
 		else
 		{
 			Frame_Skip = 0;
-			Update_Frame = Network_Do_Genesis_Frame;
+			Update_Frame = Network_Do_Frame;
 		}
 	}
 }
