@@ -8,6 +8,5 @@ download the rom automatically
 add the option to set the audio volume
 allow to set the shortcuts
 add mnemonics to the menu bar
-free the allocated memory
 close the windows when "OK" is selected
 remove the warning "warning: label alone on a line without a colon might be in error"

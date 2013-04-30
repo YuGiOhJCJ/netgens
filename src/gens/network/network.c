@@ -64,239 +64,229 @@ unsigned int Controller_2_C;
 unsigned int Controller_2_X;
 unsigned int Controller_2_Y;
 unsigned int Controller_2_Z;
-void Network_Save_Config(char* Conf_File)
+void Network_Save_Config(char *conf_file)
 {
-	WritePrivateProfileString("Network", "Network mode", Network_Mode, Conf_File);
-	WritePrivateProfileString("Network", "Network address", Network_Address, Conf_File);
+	WritePrivateProfileString("Network", "Network mode", Network_Mode, conf_file);
+	WritePrivateProfileString("Network", "Network address", Network_Address, conf_file);
 	sprintf(Str_Tmp, "%d", Network_Port);
-	WritePrivateProfileString("Network", "Network port", Str_Tmp, Conf_File);
+	WritePrivateProfileString("Network", "Network port", Str_Tmp, conf_file);
 }
-void Network_Load_Config(char* Conf_File)
+void Network_Load_Config(char *conf_file)
 {
-	GetPrivateProfileString ("Network", "Network mode", "", &Network_Mode[0], 1024, Conf_File);
-	GetPrivateProfileString ("Network", "Network address", "localhost", &Network_Address[0], 1024, Conf_File);
-	Network_Port = GetPrivateProfileInt ("Network", "Network port", 9999, Conf_File);
+	GetPrivateProfileString("Network", "Network mode", "", &Network_Mode[0], 1024, conf_file);
+	GetPrivateProfileString("Network", "Network address", "localhost", &Network_Address[0], 1024, conf_file);
+	Network_Port = GetPrivateProfileInt("Network", "Network port", 9999, conf_file);
 }
-char* Network_Integer_To_Array(int Integer)
+char *Network_Integer_To_String(int integer)
 {
-	int Integer_New = 0;
-	int Len = 1;
-	char* Value = NULL;
-	Integer_New = Integer / 10;
-	while(Integer_New != 0)
+	int integer_new = 0;
+	int len = 1;
+	char *value = NULL;
+	integer_new = integer / 10;
+	while(integer_new != 0)
 	{
-		Len++;
-		Integer_New = Integer_New / 10;
+		len++;
+		integer_new = integer_new / 10;
 	}
-	Value = malloc(sizeof(char) * Len + 1);
-	sprintf(Value, "%d", Integer);
-	return Value;
+	value = malloc(sizeof(char) * len + 1);
+	sprintf(value, "%d", integer);
+	return value;
 }
-void Network_Set_Value(GtkWidget* Menu_Item, gpointer User_Data)
+char *Network_Concatenate_Strings(const char *dest, const char *src)
 {
-	if(strcmp(gtk_widget_get_name(Menu_Item), "Network_Item_Network_Mode_Server") == 0)
+	if(dest == NULL || src == NULL)
+	{
+		fprintf(stderr, "%s:%d: %s (The parameters are null)\n", __FILE__, __LINE__, __PRETTY_FUNCTION__);
+		exit(EXIT_FAILURE);
+	}
+	int size = (strlen(dest)*sizeof(char)) + (strlen(src)*sizeof(char)) + 1;
+	char *newdest = NULL;
+	newdest = malloc(size);
+	if(newdest == NULL)
+	{
+		fprintf(stderr, "%s:%d: %s (Unable to allocate dynamic memory)\n", __FILE__, __LINE__, __PRETTY_FUNCTION__);
+		exit(EXIT_FAILURE);
+	}
+	sprintf(newdest, "%s%s\0", dest, src);
+	return newdest;
+}
+void Network_Set_Value(GtkWidget *widget, gpointer user_data)
+{
+	if(strcmp(gtk_widget_get_name(widget), "Network item network mode server") == 0)
 	{
 		strcpy(Network_Mode, "server\0");
 	}
-	if(strcmp(gtk_widget_get_name(Menu_Item), "Network_Item_Network_Mode_Client") == 0)
+	if(strcmp(gtk_widget_get_name(widget), "Network item network mode client") == 0)
 	{
 		strcpy(Network_Mode, "client\0");
 	}
-	if(strcmp(gtk_widget_get_name(Menu_Item), "Network_Item_Network_Mode_Disabled") == 0)
+	if(strcmp(gtk_widget_get_name(widget), "Network item network mode disabled") == 0)
 	{
 		strcpy(Network_Mode, "disabled\0");
 	}
-	if(strcmp(gtk_widget_get_name(Menu_Item), "Network_Item_Network_Mode_Disabled") == 0)
+	if(strcmp(gtk_widget_get_name(widget), "Network item network mode disabled") == 0)
 	{
 		strcpy(Network_Mode, "disabled\0");
 	}
-	if(strcmp(gtk_widget_get_name(Menu_Item), "Network_Button_Network_Address_Ok") == 0)
+	if(strcmp(gtk_widget_get_name(widget), "Network button ok network address") == 0)
 	{
-		if(strlen(User_Data) == 0)
+		if(strlen(user_data) == 0)
 			strcpy(Network_Address, "localhost");
 		else
-			strcpy(Network_Address, User_Data);
+			strcpy(Network_Address, user_data);
 	}
-	if(strcmp(gtk_widget_get_name(Menu_Item), "Network_Button_Network_Port_Ok") == 0)
+	if(strcmp(gtk_widget_get_name(widget), "Network button ok network port") == 0)
 	{
-		if(strlen(User_Data) == 0)
+		if(strlen(user_data) == 0)
 			Network_Port = 5394;
 		else
-			Network_Port = atoi(User_Data);
+			Network_Port = atoi(user_data);
 	}
+}
+void Network_Create_Window_Network(const char *name, const char *entry_text)
+{
+	gint Spacing = 5;
+	char *widget_name = NULL;
+	/* window network */
+	widget_name = Network_Concatenate_Strings("Network window ", name);
+	GtkWidget *Network_Window;
+	Network_Window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_widget_set_name(Network_Window, widget_name);
+	gtk_container_set_border_width(GTK_CONTAINER(Network_Window), Spacing);
+	gtk_window_set_title(GTK_WINDOW(Network_Window), name);
+	gtk_window_set_modal(GTK_WINDOW(Network_Window), TRUE);
+	gtk_window_set_resizable(GTK_WINDOW(Network_Window), FALSE);
+	free(widget_name);
+	/* vbox network */
+	widget_name = Network_Concatenate_Strings("Network vbox ", name);
+	GtkWidget *Network_VBox;
+	Network_VBox = gtk_vbox_new(FALSE, Spacing);
+	gtk_widget_set_name(Network_VBox, widget_name);
+	gtk_widget_show(Network_VBox);
+	gtk_container_add(GTK_CONTAINER(Network_Window), Network_VBox);
+	free(widget_name);
+	/* entry network */
+	widget_name = Network_Concatenate_Strings("Network entry ", name);
+	GtkWidget *Network_Entry;
+	Network_Entry = gtk_entry_new();
+	gtk_widget_set_name(Network_Entry, widget_name);
+	gtk_widget_show(Network_Entry);
+	gtk_box_pack_start(GTK_BOX(Network_VBox), Network_Entry, TRUE, TRUE, 0);
+	gtk_entry_set_text(GTK_ENTRY(Network_Entry), entry_text);
+	free(widget_name);
+	/* hbox network */
+	widget_name = Network_Concatenate_Strings("Network hbox ", name);
+	GtkWidget *Network_HBox;
+	Network_HBox = gtk_hbox_new(TRUE, Spacing);
+	gtk_widget_set_name(Network_HBox, widget_name);
+	gtk_widget_show(Network_HBox);
+	gtk_box_pack_start(GTK_BOX(Network_VBox), Network_HBox, TRUE, TRUE, 0);
+	free(widget_name);
+	/* button network cancel */
+	widget_name = Network_Concatenate_Strings("Network button cancel ", name);
+	GtkWidget *Network_Button_Cancel;
+	Network_Button_Cancel = gtk_button_new_from_stock("gtk-cancel");
+	gtk_widget_set_name(Network_Button_Cancel, widget_name);
+	gtk_widget_show(Network_Button_Cancel);
+	gtk_box_pack_start(GTK_BOX(Network_HBox), Network_Button_Cancel, FALSE, FALSE, 0);
+	gtk_button_set_relief(GTK_BUTTON(Network_Button_Cancel), GTK_RELIEF_NONE);
+	free(widget_name);
+	/* button network ok */
+	widget_name = Network_Concatenate_Strings("Network button ok ", name);
+	GtkWidget *Network_Button_Ok;
+	Network_Button_Ok = gtk_button_new_from_stock("gtk-ok");
+	gtk_widget_set_name(Network_Button_Ok, widget_name);
+	gtk_widget_show(Network_Button_Ok);
+	gtk_box_pack_start(GTK_BOX(Network_HBox), Network_Button_Ok, FALSE, FALSE, 0);
+	gtk_button_set_relief(GTK_BUTTON(Network_Button_Ok), GTK_RELIEF_NONE);
+	free(widget_name);
+	/* connect to the callback function */
+	g_signal_connect((gpointer) Network_Button_Cancel, "clicked", G_CALLBACK(gtk_widget_destroy), NULL);
+	g_signal_connect((gpointer) Network_Button_Ok, "clicked", G_CALLBACK(Network_Set_Value), (gpointer) gtk_entry_get_text(GTK_ENTRY(Network_Entry)));
+	/* show */
+	gtk_widget_show(Network_Window);
 }
 void Network_Create_Window_Network_Address(void)
 {
-	gint Spacing = 5;
-	/* window network address */
-	GtkWidget* Network_Window_Network_Address;
-	Network_Window_Network_Address = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_widget_set_name(Network_Window_Network_Address, "Network_Window_Network_Address");
-	gtk_container_set_border_width(GTK_CONTAINER(Network_Window_Network_Address), Spacing);
-	gtk_window_set_title(GTK_WINDOW(Network_Window_Network_Address), "Network address");
-	gtk_window_set_modal(GTK_WINDOW(Network_Window_Network_Address), TRUE);
-	gtk_window_set_resizable(GTK_WINDOW(Network_Window_Network_Address), FALSE);
-	/* vbox network address */
-	GtkWidget* Network_VBox_Network_Address;
-	Network_VBox_Network_Address = gtk_vbox_new(FALSE, Spacing);
-	gtk_widget_set_name(Network_VBox_Network_Address, "Network_VBox_Network_Address");
-	gtk_widget_show(Network_VBox_Network_Address);
-	gtk_container_add(GTK_CONTAINER(Network_Window_Network_Address), Network_VBox_Network_Address);
-	/* entry network address */
-	GtkWidget* Network_Entry_Network_Address;
-	Network_Entry_Network_Address = gtk_entry_new();
-	gtk_widget_set_name(Network_Entry_Network_Address, "Network_Entry_Network_Address");
-	gtk_widget_show(Network_Entry_Network_Address);
-	gtk_box_pack_start(GTK_BOX(Network_VBox_Network_Address), Network_Entry_Network_Address, TRUE, TRUE, 0);
-	gtk_entry_set_text(GTK_ENTRY(Network_Entry_Network_Address), Network_Address);
-	/* hbox network address */
-	GtkWidget* Network_HBox_Network_Address;
-	Network_HBox_Network_Address = gtk_hbox_new(TRUE, Spacing);
-	gtk_widget_set_name(Network_HBox_Network_Address, "Network_HBox_Network_Address");
-	gtk_widget_show(Network_HBox_Network_Address);
-	gtk_box_pack_start(GTK_BOX(Network_VBox_Network_Address), Network_HBox_Network_Address, TRUE, TRUE, 0);
-	/* button network address cancel */
-	GtkWidget* Network_Button_Network_Address_Cancel;
-	Network_Button_Network_Address_Cancel = gtk_button_new_from_stock("gtk-cancel");
-	gtk_widget_set_name(Network_Button_Network_Address_Cancel, "Network_Button_Network_Address_Cancel");
-	gtk_widget_show(Network_Button_Network_Address_Cancel);
-	gtk_box_pack_start(GTK_BOX(Network_HBox_Network_Address), Network_Button_Network_Address_Cancel, FALSE, FALSE, 0);
-	gtk_button_set_relief(GTK_BUTTON(Network_Button_Network_Address_Cancel), GTK_RELIEF_NONE);
-	/* button network address ok */
-	GtkWidget* Network_Button_Network_Address_Ok;
-	Network_Button_Network_Address_Ok = gtk_button_new_from_stock("gtk-ok");
-	gtk_widget_set_name(Network_Button_Network_Address_Ok, "Network_Button_Network_Address_Ok");
-	gtk_widget_show(Network_Button_Network_Address_Ok);
-	gtk_box_pack_start(GTK_BOX(Network_HBox_Network_Address), Network_Button_Network_Address_Ok, FALSE, FALSE, 0);
-	gtk_button_set_relief(GTK_BUTTON(Network_Button_Network_Address_Ok), GTK_RELIEF_NONE);
-	/* connect to the callback function */
-	g_signal_connect((gpointer) Network_Button_Network_Address_Cancel, "clicked", G_CALLBACK(gtk_widget_destroy), NULL);
-	g_signal_connect((gpointer) Network_Button_Network_Address_Ok, "clicked", G_CALLBACK(Network_Set_Value), (gpointer) gtk_entry_get_text(GTK_ENTRY(Network_Entry_Network_Address)));
-	/* show */
-	gtk_widget_show(Network_Window_Network_Address);
+	Network_Create_Window_Network("network address", Network_Address);
 }
 void Network_Create_Window_Network_Port(void)
 {
-	gint Spacing = 5;
-	/* window network port */
-	GtkWidget* Network_Window_Network_Port;
-	Network_Window_Network_Port = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_widget_set_name(Network_Window_Network_Port, "Network_Window_Network_Port");
-	gtk_container_set_border_width(GTK_CONTAINER(Network_Window_Network_Port), Spacing);
-	gtk_window_set_title(GTK_WINDOW(Network_Window_Network_Port), "Network port");
-	gtk_window_set_modal(GTK_WINDOW(Network_Window_Network_Port), TRUE);
-	gtk_window_set_resizable(GTK_WINDOW(Network_Window_Network_Port), FALSE);
-	/* vbox network port */
-	GtkWidget* Network_VBox_Network_Port;
-	Network_VBox_Network_Port = gtk_vbox_new(FALSE, Spacing);
-	gtk_widget_set_name(Network_VBox_Network_Port, "Network_VBox_Network_Port");
-	gtk_widget_show(Network_VBox_Network_Port);
-	gtk_container_add(GTK_CONTAINER(Network_Window_Network_Port), Network_VBox_Network_Port);
-	/* entry network port */
-	char* value = Network_Integer_To_Array(Network_Port);
-	GtkWidget* Network_Entry_Network_Port;
-	Network_Entry_Network_Port = gtk_entry_new();
-	gtk_widget_set_name(Network_Entry_Network_Port, "Network_Entry_Network_Port");
-	gtk_widget_show(Network_Entry_Network_Port);
-	gtk_box_pack_start(GTK_BOX(Network_VBox_Network_Port), Network_Entry_Network_Port, TRUE, TRUE, 0);
-	gtk_entry_set_text(GTK_ENTRY(Network_Entry_Network_Port), value);
-	/* hbox network port */
-	GtkWidget* Network_HBox_Network_Port;
-	Network_HBox_Network_Port = gtk_hbox_new(TRUE, Spacing);
-	gtk_widget_set_name(Network_HBox_Network_Port, "Network_HBox_Network_Port");
-	gtk_widget_show(Network_HBox_Network_Port);
-	gtk_box_pack_start(GTK_BOX(Network_VBox_Network_Port), Network_HBox_Network_Port, TRUE, TRUE, 0);
-	/* button network port cancel */
-	GtkWidget* Network_Button_Network_Port_Cancel;
-	Network_Button_Network_Port_Cancel = gtk_button_new_from_stock("gtk-cancel");
-	gtk_widget_set_name(Network_Button_Network_Port_Cancel, "Network_Button_Network_Port_Cancel");
-	gtk_widget_show(Network_Button_Network_Port_Cancel);
-	gtk_box_pack_start(GTK_BOX(Network_HBox_Network_Port), Network_Button_Network_Port_Cancel, FALSE, FALSE, 0);
-	gtk_button_set_relief(GTK_BUTTON(Network_Button_Network_Port_Cancel), GTK_RELIEF_NONE);
-	/* button network port ok */
-	GtkWidget* Network_Button_Network_Port_Ok;
-	Network_Button_Network_Port_Ok = gtk_button_new_from_stock("gtk-ok");
-	gtk_widget_set_name(Network_Button_Network_Port_Ok, "Network_Button_Network_Port_Ok");
-	gtk_widget_show(Network_Button_Network_Port_Ok);
-	gtk_box_pack_start(GTK_BOX(Network_HBox_Network_Port), Network_Button_Network_Port_Ok, FALSE, FALSE, 0);
-	gtk_button_set_relief(GTK_BUTTON(Network_Button_Network_Port_Ok), GTK_RELIEF_NONE);
-	/* connect to the callback function */
-	g_signal_connect((gpointer) Network_Button_Network_Port_Cancel, "clicked", G_CALLBACK(gtk_widget_destroy), NULL);
-	g_signal_connect((gpointer) Network_Button_Network_Port_Ok, "clicked", G_CALLBACK(Network_Set_Value), (gpointer) gtk_entry_get_text(GTK_ENTRY(Network_Entry_Network_Port)));
-	/* show */
-	gtk_widget_show(Network_Window_Network_Port);
+	char *value = Network_Integer_To_String(Network_Port);
+	Network_Create_Window_Network("network port", value);
+	free(value);
 }
-void Network_Create_Window(GtkWidget* Network_Window)
+void Network_Create_Window(GtkWidget *Network_Window)
 {
 	/* vbox */
-	GtkWidget* Network_VBox;
+	GtkWidget *Network_VBox;
 	Network_VBox = gtk_bin_get_child(GTK_BIN(Network_Window));
 	/* handlebox */
-	GtkWidget* Network_Handle_Box;
-	GList* Network_G_List = gtk_container_get_children(GTK_CONTAINER(Network_VBox));
+	GtkWidget *Network_Handle_Box;
+	GList *Network_G_List = gtk_container_get_children(GTK_CONTAINER(Network_VBox));
 	Network_Handle_Box = Network_G_List->data;
 	/* menubar */
-	GtkWidget* Network_Menu_Bar;
+	GtkWidget *Network_Menu_Bar;
 	Network_G_List = gtk_container_get_children(GTK_CONTAINER(Network_Handle_Box));
 	Network_Menu_Bar = Network_G_List->data;
 	/* item network */
-	GtkWidget* Network_Item_Network;
+	GtkWidget *Network_Item_Network;
 	Network_Item_Network = gtk_image_menu_item_new_with_mnemonic("_Network");
-	gtk_widget_set_name(Network_Item_Network, "Network_Item_Network");
+	gtk_widget_set_name(Network_Item_Network, "Network item network");
 	gtk_widget_show(Network_Item_Network);
 	gtk_container_add(GTK_CONTAINER(Network_Menu_Bar), Network_Item_Network);
 	/* menu network */
-	GtkWidget* Netwok_Menu_Network;
+	GtkWidget *Netwok_Menu_Network;
 	Netwok_Menu_Network = gtk_menu_new();
-	gtk_widget_set_name(Netwok_Menu_Network, "Netwok_Menu_Network");
+	gtk_widget_set_name(Netwok_Menu_Network, "Netwok menu network");
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(Network_Item_Network), Netwok_Menu_Network);
 	/* item network mode */
-	GtkWidget* Network_Item_Network_Mode;
+	GtkWidget *Network_Item_Network_Mode;
 	Network_Item_Network_Mode = gtk_image_menu_item_new_with_mnemonic("Mode");
-	gtk_widget_set_name(Network_Item_Network_Mode, "Network_Item_Network_Mode");
+	gtk_widget_set_name(Network_Item_Network_Mode, "Network item network mode");
 	gtk_widget_show(Network_Item_Network_Mode);
 	gtk_container_add(GTK_CONTAINER(Netwok_Menu_Network), Network_Item_Network_Mode);
 	/* item network address */
-	GtkWidget* Network_Item_Network_Address;
+	GtkWidget *Network_Item_Network_Address;
 	Network_Item_Network_Address = gtk_image_menu_item_new_with_mnemonic("Address...");
-	gtk_widget_set_name(Network_Item_Network_Address, "Network_Item_Network_Address");
+	gtk_widget_set_name(Network_Item_Network_Address, "Network item network address");
 	gtk_widget_show(Network_Item_Network_Address);
 	gtk_container_add(GTK_CONTAINER(Netwok_Menu_Network), Network_Item_Network_Address);
 	/* item network port */
-	GtkWidget* Network_Item_Network_Port;
+	GtkWidget *Network_Item_Network_Port;
 	Network_Item_Network_Port = gtk_image_menu_item_new_with_mnemonic("Port...");
-	gtk_widget_set_name(Network_Item_Network_Port, "Network_Item_Network_Port");
+	gtk_widget_set_name(Network_Item_Network_Port, "Network item network port");
 	gtk_widget_show(Network_Item_Network_Port);
 	gtk_container_add(GTK_CONTAINER(Netwok_Menu_Network), Network_Item_Network_Port);
 	/* menu network mode */
-	GtkWidget* Network_Menu_Network_Mode;
+	GtkWidget *Network_Menu_Network_Mode;
 	Network_Menu_Network_Mode = gtk_menu_new();
-	gtk_widget_set_name(Network_Menu_Network_Mode, "Network_Menu_Network_Mode");
+	gtk_widget_set_name(Network_Menu_Network_Mode, "Network menu network mode");
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(Network_Item_Network_Mode), Network_Menu_Network_Mode);
 	/* item network mode server */
-	GSList* Network_Group_Network_Mode = NULL;
-	GtkWidget* Network_Item_Network_Mode_Server;
+	GSList *Network_Group_Network_Mode = NULL;
+	GtkWidget *Network_Item_Network_Mode_Server;
 	Network_Item_Network_Mode_Server = gtk_radio_menu_item_new_with_mnemonic(Network_Group_Network_Mode, "Server");
 	Network_Group_Network_Mode = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(Network_Item_Network_Mode_Server));
-	gtk_widget_set_name(Network_Item_Network_Mode_Server, "Network_Item_Network_Mode_Server");
+	gtk_widget_set_name(Network_Item_Network_Mode_Server, "Network item network mode server");
 	gtk_widget_show(Network_Item_Network_Mode_Server);
 	gtk_container_add(GTK_CONTAINER(Network_Menu_Network_Mode), Network_Item_Network_Mode_Server);
 	if(strcmp(Network_Mode, "server") == 0)
 		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(Network_Item_Network_Mode_Server), TRUE);
 	/* item network mode client */
-	GtkWidget* Network_Item_Network_Mode_Client;
+	GtkWidget *Network_Item_Network_Mode_Client;
 	Network_Item_Network_Mode_Client = gtk_radio_menu_item_new_with_mnemonic(Network_Group_Network_Mode, "Client");
 	Network_Group_Network_Mode = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(Network_Item_Network_Mode_Client));
-	gtk_widget_set_name(Network_Item_Network_Mode_Client, "Network_Item_Network_Mode_Client");
+	gtk_widget_set_name(Network_Item_Network_Mode_Client, "Network item network mode client");
 	gtk_widget_show(Network_Item_Network_Mode_Client);
 	gtk_container_add(GTK_CONTAINER(Network_Menu_Network_Mode), Network_Item_Network_Mode_Client);
 	if(strcmp(Network_Mode, "client") == 0)
 		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(Network_Item_Network_Mode_Client), TRUE);
 	/* item network mode disabled */
-	GtkWidget* Network_Item_Network_Mode_Disabled;
+	GtkWidget *Network_Item_Network_Mode_Disabled;
 	Network_Item_Network_Mode_Disabled = gtk_radio_menu_item_new_with_mnemonic(Network_Group_Network_Mode, "Disabled");
 	Network_Group_Network_Mode = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(Network_Item_Network_Mode_Disabled));
-	gtk_widget_set_name(Network_Item_Network_Mode_Disabled, "Network_Item_Network_Mode_Disabled");
+	gtk_widget_set_name(Network_Item_Network_Mode_Disabled, "Network item network mode disabled");
 	gtk_widget_show(Network_Item_Network_Mode_Disabled);
 	gtk_container_add(GTK_CONTAINER(Network_Menu_Network_Mode), Network_Item_Network_Mode_Disabled);
 	if(strcmp(Network_Mode, "disabled") == 0)

@@ -44,13 +44,58 @@ extern int Network_Port;
 extern TCPsocket Network_Server_Tcpsocket;
 extern TCPsocket Network_Tcpsocket;
 int (*Network_Update_Frame)();
-void Network_Save_Config(char* Conf_File);
-void Network_Load_Config(char* Conf_File);
-char* Network_Integer_To_Array(int Integer);
-void Network_Set_Value(GtkWidget* Menu_Item, gpointer User_Data);
+/**
+ * Saves the configuration to the given file.
+ * It is called by the Save_Config function.
+ * @param conf_file the configuration file
+ */
+void Network_Save_Config(char *conf_file);
+/**
+ * Load the configuration from the given file.
+ * It is called by the Load_Config function.
+ * @param conf_file the configuration file
+ */
+void Network_Load_Config(char *conf_file);
+/**
+ * Converts an integer to a string.
+ * It is called by the Network_Create_Window_Network_Port function.
+ * @param integer the integer
+ * @return the string
+ */
+char *Network_Integer_To_String(int integer);
+/**
+ * Appends the source string to the destination string.
+ * It is called by the Network_Create_Window_Network function.
+ * @param dest the destination string
+ * @param src the source string
+ * @return the new string containing the source and the destination
+ */
+char *Network_Concatenate_Strings(const char *dest, const char *src);
+/**
+ * The callback function.
+ * It is called by the Network_Create_Window and Network_Create_Window_Network functions.
+ * @param widget the widget
+ * @param user_data the user data
+ */
+void Network_Set_Value(GtkWidget *widget, gpointer user_data);
+/**
+ * Creates a window containing an entry and two buttons.
+ * It is called by the Network_Create_Window_Network_Address and Network_Create_Window_Network_Port functions.
+ * @param name the name of the window
+ * @param entry_text the text of the entry
+ */
+void Network_Create_Window_Network(const char *name, const char *entry_text);
+/**
+ * Creates a window containing an entry and two buttons for the network address.
+ * It calls the Network_Create_Window_Network function.
+ */
 void Network_Create_Window_Network_Address(void);
+/**
+ * Creates a window containing an entry and two buttons for the network port.
+ * It calls the Network_Integer_To_Array and Network_Create_Window_Network functions.
+ */
 void Network_Create_Window_Network_Port(void);
-void Network_Create_Window(GtkWidget* Network_Window);
+void Network_Create_Window(GtkWidget *Network_Window);
 int Network_Do_Frame(void);
 void Network_Update_Emulation(void);
 Network_Data_T Network_GetData1(void);
