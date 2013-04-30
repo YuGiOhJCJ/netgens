@@ -1,3 +1,57 @@
+2013-04-30  YuGiOhJCJ  <yugiohjcj@1s.fr>
+
+	* src/gens/network/network.h(Network_Save_Config): Modified file (add documentation in the commentaries of the function).
+
+	* src/gens/network/network.h(Network_Load_Config): Modified file (add documentation in the commentaries of the function).
+
+	* src/gens/network/network.h(Network_Integer_To_Array): Modified file (add documentation in the commentaries of the function).
+	
+	* src/gens/network/network.h(Network_Concatenate_Strings): Modified file (add documentation in the commentaries of the function).
+
+	* src/gens/network/network.h(Network_Set_Value): Modified file (add documentation in the commentaries of the function).
+
+	* src/gens/network/network.h(Network_Create_Window_Network): Modified file (add documentation in the commentaries of the function).
+
+	* src/gens/network/network.h(Network_Create_Window_Network_Address): Modified file (add documentation in the commentaries of the function).
+
+	* src/gens/network/network.h(Network_Create_Window_Network_Port): Modified file (add documentation in the commentaries of the function).
+
+	* src/gens/network/network.h(Network_Save_Config): Modified file (parameters are in lower case).
+
+	* src/gens/network/network.h(Network_Load_Config): Modified file (parameters are in lower case).
+
+	* src/gens/network/network.h(Network_Integer_To_Array): Modified file (parameters are in lower case).
+
+	* src/gens/network/network.h(Network_Set_Value): Modified file (parameters are in lower case).
+
+	* src/gens/network/network.c(Network_Save_Config): Modified file (parameters and variables are in lower case).
+
+	* src/gens/network/network.c(Network_Load_Config): Modified file (parameters and variables are in lower case).
+
+	* src/gens/network/network.c(Network_Integer_To_Array): Modified file (parameters and variables are in lower case).
+
+	* src/gens/network/network.c(Network_Set_Value): Modified file (parameters and variables are in lower case).
+
+	* src/gens/network/network.c: Modified file (the pointer star is glued to the name instead of the type).
+
+	* src/gens/network/network.h: Modified file (the pointer star is glued to the name instead of the type).
+
+	* src/gens/network/network.c: Modified file (the widget names doesn't contain the underscore character).
+
+	* src/gens/network/network.c(Network_Integer_To_Array): Modified file (the function is renamed Network_Integer_To_String because it converts to an array of characters).
+
+	* src/gens/network/network.h(Network_Integer_To_Array): Modified file (the function is renamed Network_Integer_To_String because it converts to an array of characters).
+
+	* src/gens/network/network.c(Network_Create_Window_Network): Modified file (new function that factorize code for the Network_Create_Window_Network_Address and Network_Create_Window_Network_Port functions).
+
+	* src/gens/network/network.c(Network_Create_Window_Network_Address): Modified file (the function calls the Network_Create_Window_Network function).
+
+	* src/gens/network/network.c(Network_Create_Window_Network_Port): Modified file (the function calls the Network_Create_Window_Network function).
+
+	* src/gens/network/network.c(Network_Create_Window_Network_Port): Modified file (the function free the allocated memory).
+
+	* src/gens/network/network.c(Network_Concatenate_Strings): Modified file (new function that concatenates two strings).
+
 2013-04-29  YuGiOhJCJ  <yugiohjcj@1s.fr>
 
 	* configure.ac: Modified file (the error messages are displayed as soon as possible).
