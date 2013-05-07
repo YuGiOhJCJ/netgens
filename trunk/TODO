@@ -8,5 +8,7 @@ download the rom automatically
 add the option to set the audio volume
 allow to set the shortcuts
 add mnemonics to the menu bar
-close the windows when "OK" is selected
 remove the warning "warning: label alone on a line without a colon might be in error"
+call "netgens" instead of "gens" the binary
+set a correct version number to netgens
+use the network_data_t structure instead of declaring a lot of separated variables
