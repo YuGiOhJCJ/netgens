@@ -30,40 +30,6 @@ char Network_Address[1024] = "localhost\0";
 int Network_Port = 5394;
 TCPsocket Network_Server_Tcpsocket = NULL;
 TCPsocket Network_Tcpsocket = NULL;
-unsigned int Controller_1_Type;
-unsigned int Controller_1_State;
-unsigned int Controller_1_COM;
-unsigned int Controller_1_Counter;
-unsigned int Controller_1_Delay;
-unsigned int Controller_1_Up;
-unsigned int Controller_1_Down;
-unsigned int Controller_1_Left;
-unsigned int Controller_1_Right;
-unsigned int Controller_1_Start;
-unsigned int Controller_1_Mode;
-unsigned int Controller_1_A;
-unsigned int Controller_1_B;
-unsigned int Controller_1_C;
-unsigned int Controller_1_X;
-unsigned int Controller_1_Y;
-unsigned int Controller_1_Z;
-unsigned int Controller_2_Type;
-unsigned int Controller_2_State;
-unsigned int Controller_2_COM;
-unsigned int Controller_2_Counter;
-unsigned int Controller_2_Delay;
-unsigned int Controller_2_Up;
-unsigned int Controller_2_Down;
-unsigned int Controller_2_Left;
-unsigned int Controller_2_Right;
-unsigned int Controller_2_Start;
-unsigned int Controller_2_Mode;
-unsigned int Controller_2_A;
-unsigned int Controller_2_B;
-unsigned int Controller_2_C;
-unsigned int Controller_2_X;
-unsigned int Controller_2_Y;
-unsigned int Controller_2_Z;
 void Network_Save_Config(char *conf_file)
 {
 	WritePrivateProfileString("Network", "Network mode", Network_Mode, conf_file);
@@ -89,6 +55,11 @@ char *Network_Integer_To_String(int integer)
 		integer_new = integer_new / 10;
 	}
 	value = malloc(sizeof(char) * len + 1);
+	if(value == NULL)
+	{
+		fprintf(stderr, "%s:%d: %s (Unable to allocate dynamic memory)\n", __FILE__, __LINE__, __PRETTY_FUNCTION__);
+		exit(EXIT_FAILURE);
+	}
 	sprintf(value, "%d", integer);
 	return value;
 }
@@ -124,23 +95,37 @@ void Network_Set_Value(GtkWidget *widget, gpointer user_data)
 	{
 		strcpy(Network_Mode, "disabled\0");
 	}
-	if(strcmp(gtk_widget_get_name(widget), "Network item network mode disabled") == 0)
+	if(strcmp(gtk_widget_get_name(widget), "Network button cancel network address") == 0)
 	{
-		strcpy(Network_Mode, "disabled\0");
+		network_user_data_t *callback_data = (network_user_data_t*) user_data;
+		gtk_object_destroy(GTK_OBJECT(callback_data->widget));
+		free(callback_data);
+	}
+	if(strcmp(gtk_widget_get_name(widget), "Network button cancel network port") == 0)
+	{
+		network_user_data_t *callback_data = (network_user_data_t*) user_data;
+		gtk_object_destroy(GTK_OBJECT(callback_data->widget));
+		free(callback_data);
 	}
 	if(strcmp(gtk_widget_get_name(widget), "Network button ok network address") == 0)
 	{
-		if(strlen(user_data) == 0)
+		network_user_data_t *callback_data = (network_user_data_t*) user_data;
+		if(strlen(callback_data->text) == 0)
 			strcpy(Network_Address, "localhost");
 		else
-			strcpy(Network_Address, user_data);
+			strcpy(Network_Address, callback_data->text);
+		gtk_object_destroy(GTK_OBJECT(callback_data->widget));
+		free(callback_data);
 	}
 	if(strcmp(gtk_widget_get_name(widget), "Network button ok network port") == 0)
 	{
-		if(strlen(user_data) == 0)
+		network_user_data_t *callback_data = (network_user_data_t*) user_data;
+		if(strlen(callback_data->text) == 0)
 			Network_Port = 5394;
 		else
-			Network_Port = atoi(user_data);
+			Network_Port = atoi(callback_data->text);
+		gtk_object_destroy(GTK_OBJECT(callback_data->widget));
+		free(callback_data);
 	}
 }
 void Network_Create_Window_Network(const char *name, const char *entry_text)
@@ -201,8 +186,16 @@ void Network_Create_Window_Network(const char *name, const char *entry_text)
 	gtk_button_set_relief(GTK_BUTTON(Network_Button_Ok), GTK_RELIEF_NONE);
 	free(widget_name);
 	/* connect to the callback function */
-	g_signal_connect((gpointer) Network_Button_Cancel, "clicked", G_CALLBACK(gtk_widget_destroy), NULL);
-	g_signal_connect((gpointer) Network_Button_Ok, "clicked", G_CALLBACK(Network_Set_Value), (gpointer) gtk_entry_get_text(GTK_ENTRY(Network_Entry)));
+	network_user_data_t *callback_data = malloc(sizeof(network_user_data_t));
+	if(callback_data == NULL)
+	{
+		fprintf(stderr, "%s:%d: %s (Unable to allocate dynamic memory)\n", __FILE__, __LINE__, __PRETTY_FUNCTION__);
+		exit(EXIT_FAILURE);
+	}
+	callback_data->text = gtk_entry_get_text(GTK_ENTRY(Network_Entry));
+	callback_data->widget = Network_Window;
+	g_signal_connect((gpointer) Network_Button_Cancel, "clicked", G_CALLBACK(Network_Set_Value), (gpointer) callback_data);
+	g_signal_connect((gpointer) Network_Button_Ok, "clicked", G_CALLBACK(Network_Set_Value), (gpointer) callback_data);
 	/* show */
 	gtk_widget_show(Network_Window);
 }
@@ -304,7 +297,7 @@ int Network_Do_Frame(void)
 	{
 		int Len;
 		int Result;
-		Network_Data_T Network_Data;
+		network_data_t Network_Data;
 		Network_Data = Network_GetData1();
 		Len = sizeof(Network_Data);
 		Result = SDLNet_TCP_Send(Network_Tcpsocket, &Network_Data, Len);
@@ -318,7 +311,7 @@ int Network_Do_Frame(void)
 	{
 		int Len;
 		int Result;
-		Network_Data_T Network_Data;
+		network_data_t Network_Data;
 		if(SDLNet_TCP_Recv(Network_Tcpsocket, &Network_Data, sizeof(Network_Data)) <= 0)
 			fprintf(stderr, "%s:%d: %s (The client has a problem while receiving data from the socket)\n", __FILE__, __LINE__, __PRETTY_FUNCTION__);
 		Network_SetData1(Network_Data);
@@ -378,9 +371,9 @@ void Network_Update_Emulation(void)
 		}
 	}
 }
-Network_Data_T Network_GetData1(void)
+network_data_t Network_GetData1(void)
 {
-	Network_Data_T Network_Data;
+	network_data_t Network_Data;
 	Network_Data.Controller_1_Type = Controller_1_Type;
 	Network_Data.Controller_1_State = Controller_1_State;
 	Network_Data.Controller_1_COM = Controller_1_COM;
@@ -400,9 +393,9 @@ Network_Data_T Network_GetData1(void)
 	Network_Data.Controller_1_Z = Controller_1_Z;
 	return Network_Data;
 }
-Network_Data_T Network_GetData2(void)
+network_data_t Network_GetData2(void)
 {
-	Network_Data_T Network_Data;
+	network_data_t Network_Data;
 	Network_Data.Controller_1_Type = Controller_2_Type;
 	Network_Data.Controller_1_State = Controller_2_State;
 	Network_Data.Controller_1_COM = Controller_2_COM;
@@ -422,7 +415,7 @@ Network_Data_T Network_GetData2(void)
 	Network_Data.Controller_1_Z = Controller_2_Z;
 	return Network_Data;
 }
-void Network_SetData1(Network_Data_T Network_Data)
+void Network_SetData1(network_data_t Network_Data)
 {
 	Controller_1_Type = Network_Data.Controller_1_Type;
 	Controller_1_State = Network_Data.Controller_1_State;
@@ -442,7 +435,7 @@ void Network_SetData1(Network_Data_T Network_Data)
 	Controller_1_Y = Network_Data.Controller_1_Y;
 	Controller_1_Z = Network_Data.Controller_1_Z;
 }
-void Network_SetData2(Network_Data_T Network_Data)
+void Network_SetData2(network_data_t Network_Data)
 {
 	Controller_2_Type = Network_Data.Controller_1_Type;
 	Controller_2_State = Network_Data.Controller_1_State;

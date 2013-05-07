@@ -1,3 +1,23 @@
+2013-05-07  YuGiOhJCJ  <yugiohjcj@1s.fr>
+
+	* src/gens/network/network.c: Modified file (move the Controller_* declarations from this file to network.h).
+
+	* src/gens/network/network.h: Modified file (move the Controller_* declarations from network.c to this file).
+
+	* src/gens/network/network.h: Modified file (add the network_user_data_t structure).
+
+	* src/gens/network/network.h: Modified file (rename the Network_Data_T structure to network_data_t).
+
+	* src/gens/network/network.c: Modified file (rename the Network_Data_T structure to network_data_t).
+
+	* src/gens/network/network.c(Network_Set_Value): Modified file (the function destroys the window after the button is clicked).
+
+	* src/gens/network/network.c(Network_Create_Window_Network): Modified file (the function creates a network_user_data_t structure for the callback function).
+
+	* src/gens/network/network.c(Network_Integer_To_String): Modified file (the function exits if unable to allocate dynamic memory).
+
+	* src/gens/network/network.c(Network_Set_Value): Modified file (remove duplicated code).
+
 2013-04-30  YuGiOhJCJ  <yugiohjcj@1s.fr>
 
 	* src/gens/network/network.h(Network_Save_Config): Modified file (add documentation in the commentaries of the function).
