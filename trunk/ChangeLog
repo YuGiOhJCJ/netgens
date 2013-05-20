@@ -1,3 +1,29 @@
+2013-05-20  YuGiOhJCJ  <yugiohjcj@1s.fr>
+
+	* src/gens/gtkui/glade/callbacks.c: Modified file (use the GTK_COMBO_BOX macro to avoid the warnings).
+
+	* src/gens/audio/audio.h: Added file (declarations for the audio feature).
+
+	* src/gens/audio/audio.c: Added file (definitions for the audio feature).
+
+	* src/gens/gtkui/glade/interface.c(create_gens_window): Modified file (calls the Audio_Create_Window function).
+
+	* src/gens/Makefile.am: Modified file (the "INCLUDES" variable is modified to take in account the "audio" directory).
+
+	* src/gens/Makefile.am: Modified file (the "gens_SOURCES" variable is modified to take in account the "audio" directory).
+
+	* src/gens/util/file/save.c(Save_Config): Modified file (calls the Audio_Save_Config function).
+
+	* src/gens/util/file/save.c(Load_Config): Modified file (calls the Audio_Load_Config function).
+
+	* src/gens/network/network.c(Network_Set_Value): Modified file (the function allows only a port in the 0-65535 range).
+
+	* src/gens/sdllayer/g_sdlsound.c(proc): Modified file (calls SDL_MixAudio to be able to set the audio volume).
+
+	* src/gens/sdllayer/g_sdlsound.c: Modified file (the copyright notice is added).
+
+	* src/gens/gtkui/glade/callbacks.c: Modified file (the copyright notice is added).
+
 2013-05-07  YuGiOhJCJ  <yugiohjcj@1s.fr>
 
 	* src/gens/network/network.c: Modified file (move the Controller_* declarations from this file to network.h).
@@ -78,15 +104,15 @@
 
 	* src/gens/gtkui/glade/interface.c: Modified file (use "g_object_unref" instead of "gdk_pixbuf_unref" to avoid the warnings).
 
-	* src/gens/network/network.c(Network_Create_Window): Modified file (use GTK_CONTAINER to avoid the warnings).
+	* src/gens/network/network.c(Network_Create_Window): Modified file (use the GTK_CONTAINER macro to avoid the warnings).
 
-	* src/gens/network/network.c(Network_Create_Window): Modified file (use GTK_BIN to avoid the warnings).
+	* src/gens/network/network.c(Network_Create_Window): Modified file (use the GTK_BIN macro to avoid the warnings).
 
-	* src/gens/network/network.c(Network_Create_Window_Network_Port): Modified file (use GTK_ENTRY to avoid the warnings).
+	* src/gens/network/network.c(Network_Create_Window_Network_Port): Modified file (use the GTK_ENTRY macro to avoid the warnings).
 
 	* src/gens/network/network.c(Network_Create_Window_Network_Port): Modified file (cast the argument 4 of g_signal_connect to gpointer to avoid the warnings).
 
-	* src/gens/network/network.c(Network_Create_Window_Network_Address): Modified file (use GTK_ENTRY to avoid the warnings).
+	* src/gens/network/network.c(Network_Create_Window_Network_Address): Modified file (use the GTK_ENTRY macro to avoid the warnings).
 
 	* src/gens/network/network.c(Network_Create_Window_Network_Address): Modified file (cast the argument 4 of g_signal_connect to gpointer to avoid the warnings).
 
@@ -186,7 +212,7 @@
 
 	* src/gens/util/file/save.c(Load_Config): Modified function (calls the Network_Load_Config function).
 
-	* src/gens/gtkui/glade/interface.c(create_gens_window): Modified function (calls the Network_Create_Window).
+	* src/gens/gtkui/glade/interface.c(create_gens_window): Modified function (calls the Network_Create_Window function).
 
 	* src/gens/sdllayer/g_sdldraw.c: Modified file (the copyright notice is added).
 

@@ -33,6 +33,7 @@
 #include "interface.h"
 #include "support.h"
 #include "network.h" /* for Network_Create_Window */
+#include "audio.h" /* for Audio_Create_Window */
 
 #define GLADE_HOOKUP_OBJECT(component,widget,name) \
   g_object_set_data_full (G_OBJECT (component), name, \
@@ -2056,6 +2057,7 @@ create_gens_window (void)
   GLADE_HOOKUP_OBJECT (gens_window, image3327, "image3327");
   GLADE_HOOKUP_OBJECT_NO_REF (gens_window, tooltips, "tooltips");
   Network_Create_Window(gens_window);
+  Audio_Create_Window(gens_window);
 
   gtk_window_add_accel_group (GTK_WINDOW (gens_window), accel_group);
 

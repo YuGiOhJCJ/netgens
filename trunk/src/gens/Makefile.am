@@ -44,7 +44,7 @@ INCLUDES = \
 -I@srcdir@/gens_core/sound -I@srcdir@/gens_core/mem -I@srcdir@/gens_core/misc -I@srcdir@/gens_core/gfx \
 -I@srcdir@/gens_core/io -I@srcdir@/gens_core/vdp -I@srcdir@/segacd -I@srcdir@/mp3_dec -I@srcdir@/sdllayer \
 -I@srcdir@/util -I@srcdir@/util/gfx -I@srcdir@/util/sound -I@srcdir@/util/file \
--I@srcdir@/port -I@srcdir@/emulator -I@srcdir@/debug -I@srcdir@/netplay -I@srcdir@/network \
+-I@srcdir@/port -I@srcdir@/emulator -I@srcdir@/debug -I@srcdir@/netplay -I@srcdir@/network -I@srcdir@/audio \
 -I@srcdir@/gtkui -I@srcdir@/gtkui/glade \
 -I@srcdir@
 bin_PROGRAMS = gens
@@ -167,7 +167,9 @@ gens_SOURCES = \
 		emulator/parse.c \
 		emulator/parse.h \
 		network/network.c \
-		network/network.h
+		network/network.h \
+		audio/audio.c \
+		audio/audio.h
 gens_CFLAGS = \
 			  -DDATADIR=\"@datadir@/@PACKAGE@\" \
 			  @SDL_CFLAGS@ \

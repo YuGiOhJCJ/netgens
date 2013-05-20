@@ -1,3 +1,21 @@
+/*
+   Copyright 2013 YuGiOhJCJ
+
+   This file is part of Netgens.
+
+   Netgens is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   Netgens is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with Netgens.  If not, see <http://www.gnu.org/licenses/>.
+*/
 #include "port.h"
 #include <time.h>
 #include <stdio.h>
@@ -12,6 +30,7 @@
 #include "pcm.h"
 #include "misc.h"		// for Have_MMX flag
 #include "support.h"
+#include "audio.h" /* for Audio_Volume */
 
 int Seg_To_Buffer = 8; // for frame skip
 int Seg_L[882], Seg_R[882];
@@ -42,7 +61,8 @@ void proc (void *user, Uint8 * buffer, int len)
       audio_len = 0;
       return;
     }
-  memcpy (buffer, user, len);
+  /*memcpy (buffer, user, len);*/
+  SDL_MixAudio(buffer, user, len, Audio_Volume);
   audio_len -= len;
   memcpy (user, (unsigned char *) user + len, audio_len);
 

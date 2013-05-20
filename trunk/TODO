@@ -5,10 +5,9 @@ add a spectator mode
 add the choice of the player (1 or 2)
 add the possibility to save the network game
 download the rom automatically
-add the option to set the audio volume
 allow to set the shortcuts
 add mnemonics to the menu bar
 remove the warning "warning: label alone on a line without a colon might be in error"
 call "netgens" instead of "gens" the binary
 set a correct version number to netgens
-use the network_data_t structure instead of declaring a lot of separated variables
+add a reset button for the network address, network port and audio volume
