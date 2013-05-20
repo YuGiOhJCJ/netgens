@@ -54,6 +54,7 @@
 #include "lc89510.h"
 #include "ui_proxy.h"
 #include "network.h" /* for Network_Save_Config and Network_Load_Config */
+#include "audio.h" /* for Audio_Save_Config and Audio_Load_Config */
 enum
 {
   DIK_UP = SDLK_UP, DIK_DOWN = SDLK_DOWN,
@@ -2230,6 +2231,7 @@ Save_Config (char *File_Name)
   sprintf (Str_Tmp, "%d", Keys_Def[7].Z);
   WritePrivateProfileString ("Input", "P2D.Z", Str_Tmp, Conf_File);
   Network_Save_Config(Conf_File);
+  Audio_Save_Config(Conf_File);
 
   return 1;
 }
@@ -2634,6 +2636,7 @@ Load_Config (char *File_Name, void *Game_Active)
   Keys_Def[7].Y = GetPrivateProfileInt ("Input", "P2D.Y", 0, Conf_File);
   Keys_Def[7].Z = GetPrivateProfileInt ("Input", "P2D.Z", 0, Conf_File);
   Network_Load_Config(Conf_File);
+  Audio_Load_Config(Conf_File);
 
   Make_IO_Table ();
   return 1;

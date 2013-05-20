@@ -18,13 +18,13 @@
 */
 #include "network.h" /* for Network_* */
 #include "io.h" /* for Controller_* */
-#include "g_main.h" /* for MESSAGE_L */
+#include "g_main.h" /* for MESSAGE_L and Str_Tmp */
 #include "g_sdldraw.h" /* for Update_Frame */
 #include "gens.h" /* for Do_VDP_Only */
 #include <SDL/SDL_net.h> /* for TCPsocket and SDLNet_TCP_Accept */
-#define GLADE_HOOKUP_OBJECT(component,widget,name) \
-  g_object_set_data_full (G_OBJECT (component), name, \
-    gtk_widget_ref (widget), (GDestroyNotify) gtk_widget_unref)
+#include <gtk/gtk.h> /* for GtkWidget */
+#include <stdlib.h> /* for malloc, free and exit */
+#include <string.h> /* for strlen */
 char Network_Mode[1024] = "disabled\0";
 char Network_Address[1024] = "localhost\0";
 int Network_Port = 5394;
@@ -124,6 +124,10 @@ void Network_Set_Value(GtkWidget *widget, gpointer user_data)
 			Network_Port = 5394;
 		else
 			Network_Port = atoi(callback_data->text);
+		if(Network_Port < 0)
+			Network_Port = 0;
+		if(Network_Port > 65535)
+			Network_Port = 65535;
 		gtk_object_destroy(GTK_OBJECT(callback_data->widget));
 		free(callback_data);
 	}
