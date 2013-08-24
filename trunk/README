@@ -32,13 +32,15 @@ Because it was a pity that Gens wasn't available on Linux platforms.
 Stephane Dallongeville is the author of Gens (Windows version).
 Caz has made a BeOS port, using Allegro. But this port was command line oriented. And though Allegro is a great library, 
 its GUI part is ... well ... rather ugly.
-Thus, I (Stephane Akhoun) wanted to use GTK+ for the GUI. But as mixing Allegro and GTK+ events loop was a bit of challenge
-(though possible) I decided to switch to SDL. Fortunately, it was very easy (only 2 function calls to change !).
-Finally, in the port process, my main work is the GTK+ GUI, and some work here and there.
-Caz ported the gens core : I wanted to thank him/her one more time for his/her pieces of advice.
+Thus, Stephane Akhoun wanted to use GTK+ for the GUI. But as mixing Allegro and GTK+ events loop was a bit of challenge
+(though possible) he decided to switch to SDL. Fortunately, it was very easy (only 2 function calls to change !).
+Finally, in the port process, his main work is the GTK+ GUI, and some work here and there.
+Caz ported the gens core : Stephane Akhoun wanted to thank him/her one more time for his/her pieces of advice.
 
 Thanks also for Lester Barrows (aryarya) and El Pelos (wah wah 69) for their contribution, patches, joystick support, ...
 For all users that helped and help us in the porting process : thank you very much !
+
+I (YuGiOhJCJ) have decided to add a network feature to this emulator.
 
 
 4) So, what are the requirements ?
@@ -83,12 +85,13 @@ It will.
 8) How do I compile it ?
 ------------------------
 
-First, uncompress the archive gens.tar.gz in an empty directory :
-'tar xvzf gens.tar.gz'
+First, uncompress the archive netgens.tar.xz in an empty directory :
+'tar xvf netgens.tar.xz'
 In all cases, make sure that you use GNU Make.
 
 Then type :
-'configure'
+'autoreconf -i'
+'./configure'
 'make'
 'make install'
 
