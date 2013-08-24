@@ -1,0 +1,233 @@
+2013-08-24  YuGiOhJCJ  <yugiohjcj@1s.fr>
+
+	* README: Modified file (update the "Who've done it ?" section to add myself).
+
+	* README: Modified file (update the "How do I compile it ?" section to add the "autoreconf" command).
+
+2013-05-20  YuGiOhJCJ  <yugiohjcj@1s.fr>
+
+	* src/gens/gtkui/glade/callbacks.c: Modified file (use the GTK_COMBO_BOX macro to avoid the warnings).
+
+	* src/gens/audio/audio.h: Added file (declarations for the audio feature).
+
+	* src/gens/audio/audio.c: Added file (definitions for the audio feature).
+
+	* src/gens/gtkui/glade/interface.c(create_gens_window): Modified file (calls the Audio_Create_Window function).
+
+	* src/gens/Makefile.am: Modified file (the "INCLUDES" variable is modified to take in account the "audio" directory).
+
+	* src/gens/Makefile.am: Modified file (the "gens_SOURCES" variable is modified to take in account the "audio" directory).
+
+	* src/gens/util/file/save.c(Save_Config): Modified file (calls the Audio_Save_Config function).
+
+	* src/gens/util/file/save.c(Load_Config): Modified file (calls the Audio_Load_Config function).
+
+	* src/gens/network/network.c(Network_Set_Value): Modified file (the function allows only a port in the 0-65535 range).
+
+	* src/gens/sdllayer/g_sdlsound.c(proc): Modified file (calls SDL_MixAudio to be able to set the audio volume).
+
+	* src/gens/sdllayer/g_sdlsound.c: Modified file (the copyright notice is added).
+
+	* src/gens/gtkui/glade/callbacks.c: Modified file (the copyright notice is added).
+
+2013-05-07  YuGiOhJCJ  <yugiohjcj@1s.fr>
+
+	* src/gens/network/network.c: Modified file (move the Controller_* declarations from this file to network.h).
+
+	* src/gens/network/network.h: Modified file (move the Controller_* declarations from network.c to this file).
+
+	* src/gens/network/network.h: Modified file (add the network_user_data_t structure).
+
+	* src/gens/network/network.h: Modified file (rename the Network_Data_T structure to network_data_t).
+
+	* src/gens/network/network.c: Modified file (rename the Network_Data_T structure to network_data_t).
+
+	* src/gens/network/network.c(Network_Set_Value): Modified file (the function destroys the window after the button is clicked).
+
+	* src/gens/network/network.c(Network_Create_Window_Network): Modified file (the function creates a network_user_data_t structure for the callback function).
+
+	* src/gens/network/network.c(Network_Integer_To_String): Modified file (the function exits if unable to allocate dynamic memory).
+
+	* src/gens/network/network.c(Network_Set_Value): Modified file (remove duplicated code).
+
+2013-04-30  YuGiOhJCJ  <yugiohjcj@1s.fr>
+
+	* src/gens/network/network.h(Network_Save_Config): Modified file (add documentation in the commentaries of the function).
+
+	* src/gens/network/network.h(Network_Load_Config): Modified file (add documentation in the commentaries of the function).
+
+	* src/gens/network/network.h(Network_Integer_To_Array): Modified file (add documentation in the commentaries of the function).
+	
+	* src/gens/network/network.h(Network_Concatenate_Strings): Modified file (add documentation in the commentaries of the function).
+
+	* src/gens/network/network.h(Network_Set_Value): Modified file (add documentation in the commentaries of the function).
+
+	* src/gens/network/network.h(Network_Create_Window_Network): Modified file (add documentation in the commentaries of the function).
+
+	* src/gens/network/network.h(Network_Create_Window_Network_Address): Modified file (add documentation in the commentaries of the function).
+
+	* src/gens/network/network.h(Network_Create_Window_Network_Port): Modified file (add documentation in the commentaries of the function).
+
+	* src/gens/network/network.h(Network_Save_Config): Modified file (parameters are in lower case).
+
+	* src/gens/network/network.h(Network_Load_Config): Modified file (parameters are in lower case).
+
+	* src/gens/network/network.h(Network_Integer_To_Array): Modified file (parameters are in lower case).
+
+	* src/gens/network/network.h(Network_Set_Value): Modified file (parameters are in lower case).
+
+	* src/gens/network/network.c(Network_Save_Config): Modified file (parameters and variables are in lower case).
+
+	* src/gens/network/network.c(Network_Load_Config): Modified file (parameters and variables are in lower case).
+
+	* src/gens/network/network.c(Network_Integer_To_Array): Modified file (parameters and variables are in lower case).
+
+	* src/gens/network/network.c(Network_Set_Value): Modified file (parameters and variables are in lower case).
+
+	* src/gens/network/network.c: Modified file (the pointer star is glued to the name instead of the type).
+
+	* src/gens/network/network.h: Modified file (the pointer star is glued to the name instead of the type).
+
+	* src/gens/network/network.c: Modified file (the widget names doesn't contain the underscore character).
+
+	* src/gens/network/network.c(Network_Integer_To_Array): Modified file (the function is renamed Network_Integer_To_String because it converts to an array of characters).
+
+	* src/gens/network/network.h(Network_Integer_To_Array): Modified file (the function is renamed Network_Integer_To_String because it converts to an array of characters).
+
+	* src/gens/network/network.c(Network_Create_Window_Network): Modified file (new function that factorize code for the Network_Create_Window_Network_Address and Network_Create_Window_Network_Port functions).
+
+	* src/gens/network/network.c(Network_Create_Window_Network_Address): Modified file (the function calls the Network_Create_Window_Network function).
+
+	* src/gens/network/network.c(Network_Create_Window_Network_Port): Modified file (the function calls the Network_Create_Window_Network function).
+
+	* src/gens/network/network.c(Network_Create_Window_Network_Port): Modified file (the function free the allocated memory).
+
+	* src/gens/network/network.c(Network_Concatenate_Strings): Modified file (new function that concatenates two strings).
+
+2013-04-29  YuGiOhJCJ  <yugiohjcj@1s.fr>
+
+	* configure.ac: Modified file (the error messages are displayed as soon as possible).
+
+	* src/gens/gtkui/glade/interface.c: Modified file (use "g_object_unref" instead of "gdk_pixbuf_unref" to avoid the warnings).
+
+	* src/gens/network/network.c(Network_Create_Window): Modified file (use the GTK_CONTAINER macro to avoid the warnings).
+
+	* src/gens/network/network.c(Network_Create_Window): Modified file (use the GTK_BIN macro to avoid the warnings).
+
+	* src/gens/network/network.c(Network_Create_Window_Network_Port): Modified file (use the GTK_ENTRY macro to avoid the warnings).
+
+	* src/gens/network/network.c(Network_Create_Window_Network_Port): Modified file (cast the argument 4 of g_signal_connect to gpointer to avoid the warnings).
+
+	* src/gens/network/network.c(Network_Create_Window_Network_Address): Modified file (use the GTK_ENTRY macro to avoid the warnings).
+
+	* src/gens/network/network.c(Network_Create_Window_Network_Address): Modified file (cast the argument 4 of g_signal_connect to gpointer to avoid the warnings).
+
+	* src/gens/network/network.c(Network_Do): Modified file (the function is renamed Network_Update_Emulation because it is called by the Update_Emulation function).
+
+	* src/gens/network/network.h(Network_Do): Modified file (the function is renamed Network_Update_Emulation because it is called by the Update_Emulation function).
+
+	* src/gens/network/network.c(Network_Do): Modified file (the function assigns Update_Frame to Network_Update_Frame because we must remind if we are doing a Genesis, SegaCD or 32X frame).
+
+	* src/gens/network/network.c(Network_Do): Modified file (the function assigns Network_Do_Frame instead of Network_Do_Genesis_Frame to Update_Frame in order to work with Genesis, SegaCD and 32X instead of Genesis only).
+
+	* src/gens/network/network.c(Network_Do_Genesis_Frame): Modified file (the function is renamed Network_Do_Frame because it can do a Genesis, SegaCD or 32X frame).
+
+	* src/gens/network/network.h(Network_Do_Genesis_Frame): Modified file (the function is renamed Network_Do_Frame because it can do a Genesis, SegaCD or 32X frame).
+
+	* src/gens/network/network.h: Modified file (the file declares the Network_Update_Frame pointer).
+
+	* src/gens/network/network.c(Network_Do_Genesis_Frame): Modified file (the function calls Network_Update_Frame instead of Do_Genesis_Frame because it can do a Genesis, SegaCD or 32X frame).
+
+	* src/gens/sdllayer/g_sdldraw.c(Update_Emulation): Modified file (the function calls Network_Update_Emulation instead of Network_Do because Network_Do doesn't exists).
+
+2013-03-11  YuGiOhJCJ  <yugiohjcj@1s.fr>
+
+	* configure.in: Removed file (it is in fact renamed to "configure.ac" that is now preferred).
+	
+	* aclocal.m4: Removed file (because it can be generated).
+
+	* autom4te.cache: Removed file (because it can be generated).
+
+	* compile: Removed file (because it can be generated).
+
+	* config.guess: Removed file (because it can be generated).
+
+	* config.h.in: Removed file (because it can be generated).
+
+	* config.sub: Removed file (because it can be generated).
+
+	* configure: Removed file (because it can be generated).
+
+	* depcomp: Removed file (because it can be generated).
+
+	* install-sh: Removed file (because it can be generated).
+
+	* Makefile.in: Removed file (because it can be generated).
+
+	* missing: Removed file (because it can be generated).
+
+	* mkinstalldirs: Removed file (because it can be generated).
+
+	* pixmaps/Makefile.in: Removed file (because it can be generated).
+
+	* src/gens/Makefile.in: Removed file (because it can be generated).
+	
+	* src/Makefile.in: Removed file (because it can be generated).
+
+	* src/starscream/main68k/Makefile.in: Removed file (because it can be generated).
+
+	* src/starscream/Makefile.in: Removed file (because it can be generated).
+
+	* src/starscream/sub68k/Makefile.in: Removed file (because it can be generated).
+
+	* stamp-h.in: Removed file (because it can be generated).
+
+	* configure.ac: New file (it is in fact the renamed "configure.in" file).
+
+	* configure.in: Modified file (check for the SDL_net library).
+
+	* configure.in: Modified file (check for the nasm program).
+
+	* configure.in: Modified file (the copyright notice is added).
+
+	* Makefile.am: Modified file (the copyright notice is added).
+
+	* Makefile.am: Modified file (add the maintainer-clean-local rule to clean files that can be generated).
+
+	* src/gens/Makefile.am: Modified file (the copyright notice is added).
+
+	* src/gens/Makefile.am: Modified file (add the GL_CFLAGS, GL_LIBS and SDLNET_LIBS variables).
+
+	* src/gens/Makefile.am: Modified file (the -lGL option is added to compile fine on Ubuntu).
+	
+2013-02-22  YuGiOhJCJ  <yugiohjcj@1s.fr>
+
+	* src/gens/network/network.h: Added file (declarations for the network feature).
+
+	* src/gens/network/network.c: Added file (definitions for the network feature).
+
+	* ChangeLog: Added file (list of changes).
+
+	* TODO: Added file (list of tasks to do).
+
+	* AUTHORS: Modified file (YuGiOhJCJ is added as author for the network feature).
+
+	* src/gens/sdllayer/g_sdldraw.c(Update_Emulation): Modified function (calls the Network_Do function).
+
+	* src/gens/util/file/save.c(Save_Config): Modified function (calls the Network_Save_Config function).
+
+	* src/gens/util/file/save.c(Load_Config): Modified function (calls the Network_Load_Config function).
+
+	* src/gens/gtkui/glade/interface.c(create_gens_window): Modified function (calls the Network_Create_Window function).
+
+	* src/gens/sdllayer/g_sdldraw.c: Modified file (the copyright notice is added).
+
+	* src/gens/util/file/save.c: Modified file (the copyright notice is added).
+
+	* src/gens/gtkui/glade/interface.c: Modified file (the copyright notice is added).
+
+	* src/gens/Makefile.am: Modified file (the "INCLUDES" variable is modified to take in account the "network" directory).
+
+	* src/gens/Makefile.am: Modified file (the "gens_SOURCES" variable is modified to take in account the "network" directory).
+
+	* src/gens/Makefile.am: Modified file (the "gens_LDADD" variable is modified to take in account the "SDL_net" library).
