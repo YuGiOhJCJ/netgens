@@ -1,3 +1,9 @@
+2013-08-24  YuGiOhJCJ  <yugiohjcj@1s.fr>
+
+	* README: Modified file (update the "Who've done it ?" section to add myself).
+
+	* README: Modified file (update the "How do I compile it ?" section to add the "autoreconf" command).
+
 2013-05-20  YuGiOhJCJ  <yugiohjcj@1s.fr>
 
 	* src/gens/gtkui/glade/callbacks.c: Modified file (use the GTK_COMBO_BOX macro to avoid the warnings).
